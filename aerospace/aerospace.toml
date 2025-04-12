@@ -1,0 +1,80 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+after-startup-command = [
+# JankyBorders has a built-in detection of already running process,
+# so it won't be run twice on AeroSpace restart
+  'exec-and-forget borders order=above active_color=0xFFff4f00 inactive_color=0x00000000 width=2.0',
+]
+
+automatically-unhide-macos-hidden-apps = true
+
+# i3 doesn't have "normalizations" feature that why we disable them here.
+# But the feature is very helpful.
+# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
+# Give normalizations a chance and enable them back.
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Mouse follows focus when focused monitor changes
+# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focus-changed = ['move-mouse window-lazy-center']
+
+accordion-padding = 16
+
+[gaps]
+inner.horizontal = 16
+inner.vertical =   16
+outer.left =       16
+outer.bottom =     16
+outer.top =        16
+outer.right =      16
+
+[mode.main.binding]
+# i3 wraps focus by default
+alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+
+alt-f = 'fullscreen'
+alt-m = 'macos-native-minimize'
+alt-s = 'layout v_accordion' # 'layout stacking' in i3
+alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+
+alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+alt-q = 'close --quit-if-last-window'
+
+alt-1 = 'workspace home'
+alt-2 = 'workspace code'
+alt-3 = 'workspace web'
+
+alt-shift-1 = 'move-node-to-workspace --focus-follows-window home'
+alt-shift-2 = 'move-node-to-workspace --focus-follows-window code'
+alt-shift-3 = 'move-node-to-workspace --focus-follows-window web'
+
+alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
+alt-shift-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
+
+alt-shift-semicolon = 'mode service'
+
+# 'service' binding mode declaration.
+# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+home = 1                            
+code = [2, 1]                       
+web = [3, 1]
+

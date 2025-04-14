@@ -11,3 +11,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    -- Forward search for next wiki-link
+    vim.keymap.set('n', '<Tab>', function()
+      vim.fn.search('\\[\\[.*\\]\\]', 'W')
+    end, { buffer = true, desc = 'Next wiki-link' })
+
+    -- Backward search for previous wiki-link
+    vim.keymap.set('n', '<S-Tab>', function()
+      vim.fn.search('\\[\\[.*\\]\\]', 'bW')
+    end, { buffer = true, desc = 'Previous wiki-link' })
+  end,
+})

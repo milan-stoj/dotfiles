@@ -6,6 +6,9 @@ return {
     indent = {
       enabled = false,
     },
+    quote = {
+      repeat_linebreak = true,
+    },
   },
   ft = { 'markdown', 'Avante' },
 }

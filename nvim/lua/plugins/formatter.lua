@@ -29,7 +29,7 @@ return {
       end
     end,
     formatters_by_ft = {
-      markdown = { 'markdownlint-cli2' },
+      -- markdown = { 'markdownlint-cli2' },
       lua = { 'stylua' },
       html = { 'prettier' },
       python = { 'isort', 'black' },

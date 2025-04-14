@@ -52,13 +52,17 @@ alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
 alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
 alt-q = 'close --quit-if-last-window'
 
-alt-1 = 'workspace home'
-alt-2 = 'workspace code'
-alt-3 = 'workspace web'
+alt-1 = 'workspace 🏠'
+alt-2 = 'workspace 📥'
+alt-3 = 'workspace 👾'
+alt-4 = 'workspace 📝'
+alt-5 = 'workspace 🎧'
 
-alt-shift-1 = 'move-node-to-workspace --focus-follows-window home'
-alt-shift-2 = 'move-node-to-workspace --focus-follows-window code'
-alt-shift-3 = 'move-node-to-workspace --focus-follows-window web'
+alt-shift-1 = 'move-node-to-workspace --focus-follows-window 🏠'
+alt-shift-2 = 'move-node-to-workspace --focus-follows-window 📥'
+alt-shift-3 = 'move-node-to-workspace --focus-follows-window 👾'
+alt-shift-4 = 'move-node-to-workspace --focus-follows-window 📝'
+alt-shift-5 = 'move-node-to-workspace --focus-follows-window 🎧'
 
 alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
 alt-shift-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
@@ -74,7 +78,8 @@ f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [workspace-to-monitor-force-assignment]
-home = 1                            
-code = [2, 1]                       
-web = [3, 1]
-
+'🏠' = 1                            
+'📥' = [2, 1]                       
+'👾' = [3, 1]
+'📝' = [4, 1]                       
+'🎧' = [5, 1]

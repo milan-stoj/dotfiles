@@ -35,8 +35,8 @@ return {
     },
 
     templates = {
-      folder = "templates"
-    }
+      folder = 'templates',
+    },
 
     new_notes_location = '100-inbox',
 

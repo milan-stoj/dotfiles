@@ -34,6 +34,17 @@ return {
       enable = false,
     },
 
+    templates = {
+      folder = "templates"
+    }
+
+    new_notes_location = '100-inbox',
+
+    daily_notes = {
+      folder = '000-daily',
+      default_tags = { 'daily' },
+    },
+
     -- see below for full list of options 👇
   },
 }

@@ -30,6 +30,10 @@ return {
       min_chars = 2,
     },
 
+    ui = {
+      enable = false,
+    },
+
     -- see below for full list of options 👇
   },
 }

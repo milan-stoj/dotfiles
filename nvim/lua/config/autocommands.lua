@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Obsidian wiki link navigation
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
@@ -24,5 +25,13 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<S-Tab>', function()
       vim.fn.search('\\[\\[.*\\]\\]', 'bW')
     end, { buffer = true, desc = 'Previous wiki-link' })
+
+    -- go back to previous file
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'markdown',
+      callback = function()
+        vim.keymap.set('n', '<BS>', '<C-o>', { buffer = true, desc = 'Go back in jump list' })
+      end,
+    })
   end,
 })

@@ -15,8 +15,8 @@ enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # Mouse follows focus when focused monitor changes
-# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-# on-focus-changed = ['move-mouse window-lazy-center']
+on-focused-monitor-changed = []
+on-focus-changed = []
 
 accordion-padding = 16
 
@@ -58,11 +58,11 @@ alt-3 = 'workspace 👾'
 alt-4 = 'workspace 📝'
 alt-5 = 'workspace 🎧'
 
-alt-shift-1 = 'move-node-to-workspace --focus-follows-window 🏠'
-alt-shift-2 = 'move-node-to-workspace --focus-follows-window 📥'
-alt-shift-3 = 'move-node-to-workspace --focus-follows-window 👾'
-alt-shift-4 = 'move-node-to-workspace --focus-follows-window 📝'
-alt-shift-5 = 'move-node-to-workspace --focus-follows-window 🎧'
+alt-shift-1 = 'move-node-to-workspace 🏠'
+alt-shift-2 = 'move-node-to-workspace 📥'
+alt-shift-3 = 'move-node-to-workspace 👾'
+alt-shift-4 = 'move-node-to-workspace 📝'
+alt-shift-5 = 'move-node-to-workspace 🎧'
 
 alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
 alt-shift-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
@@ -79,7 +79,7 @@ backspace = ['close-all-windows-but-current', 'mode main']
 
 [workspace-to-monitor-force-assignment]
 '🏠' = 1                            
-'📥' = [2, 1]                       
-'👾' = [3, 1]
-'📝' = [4, 1]                       
-'🎧' = [5, 1]
+'📥' = 1                       
+'👾' = [2, 1]
+'📝' = [3, 1]                       
+'🎧' = 1

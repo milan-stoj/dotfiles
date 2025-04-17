@@ -80,3 +80,15 @@ vim.keymap.set('n', '<leader>ovs', function()
   run_git 'git push'
   print('Vault synced: ' .. commit_msg)
 end, { desc = 'Sync Obsidian vault with git', silent = false })
+
+vim.keymap.set('n', '<leader>tc', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').test_class() -- run the test class
+  end
+end)
+
+vim.keymap.set('n', '<leader>tm', function()
+  if vim.bo.filetype == 'java' then
+    require('jdtls').test_nearest_method()
+  end
+end)

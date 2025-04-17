@@ -7,7 +7,7 @@ return {
       position = 'inline',
     },
     indent = {
-      enabled = false,
+      enabled = true,
     },
     quote = {
       repeat_linebreak = true,

@@ -7,6 +7,8 @@ after-startup-command = [
 
 automatically-unhide-macos-hidden-apps = true
 
+default-root-container-layout = 'accordion'
+
 # i3 doesn't have "normalizations" feature that why we disable them here.
 # But the feature is very helpful.
 # Normalizations eliminate all sorts of weird tree configurations that don't make sense.
@@ -75,11 +77,49 @@ alt-shift-semicolon = 'mode service'
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
 backspace = ['close-all-windows-but-current', 'mode main']
 
+
+# [workspace-to-monitor-force-assignment]
+#     1 = 1                            # Monitor sequence number from left to right. 1-based indexing
+#     2 = 'main'                       # Main monitor
+#     3 = 'secondary'                  # Non-main monitor in case when there are only two monitors
+#     4 = 'built-in'                   # Case insensitive regex substring
+#     5 = '^built-in retina display$'  # Case insensitive regex match
+#     6 = ['secondary', 'dell']        # You can specify multiple patterns. First matching pattern will be used
+
 [workspace-to-monitor-force-assignment]
-'🏠' = 1                            
-'📥' = 1                       
+'🏠' = 1
+'📥' = 1
 '👾' = [2, 1]
-'📝' = [3, 1]                       
+'📝' = [3, 1]
 '🎧' = 1
+
+# [[on-window-detected]]
+#     if.app-id = 'com.apple.systempreferences'
+#     if.app-name-regex-substring = 'settings'
+#     if.window-title-regex-substring = 'substring'
+#     if.workspace = 'workspace-name'
+#     if.during-aerospace-startup = true
+#     check-further-callbacks = true
+#     run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Activity Monitor'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'slack'
+run = ['move-node-to-workspace 📥']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'outlook'
+run = ['move-node-to-workspace 📥']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'IntelliJ IDEA'
+run = ['move-node-to-workspace 📥']

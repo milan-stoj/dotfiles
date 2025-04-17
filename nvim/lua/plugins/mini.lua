@@ -16,7 +16,16 @@ return {
     -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
     -- - sd'   - [S]urround [D]elete [']quotes
     -- - sr)'  - [S]urround [R]eplace [)] [']
+    require('mini.pairs').setup()
     require('mini.surround').setup()
+    require('mini.bufremove').setup()
+    require('mini.animate').setup()
+    require('mini.notify').setup()
+    require('mini.starter').setup()
+    require('mini.tabline').setup {
+      show_icons = true,
+      format = nil,
+    }
 
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,

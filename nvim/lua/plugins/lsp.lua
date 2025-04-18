@@ -17,6 +17,9 @@ return {
       'saghen/blink.cmp',
       -- optional: provides snippets for the snippet source
       dependencies = { 'rafamadriz/friendly-snippets' },
+      enabled = function()
+        return not vim.tbl_contains({ 'sql' }, vim.bo.filetype)
+      end,
 
       -- use a release tag to download pre-built binaries
       version = '1.*',
@@ -271,8 +274,12 @@ return {
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       -- ts_ls = {},
       jdtls = {},
-      --
       bashls = {},
+      postgrestools = {
+        cmd = { 'postgrestools', 'lsp-proxys' },
+        filetypes = { 'sql' },
+        root_markers = { 'postgrestools.jsonc' },
+      },
 
       lua_ls = {
         -- cmd = { ... },

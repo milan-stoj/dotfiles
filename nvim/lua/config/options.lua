@@ -72,3 +72,5 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.wo.foldlevel = 99 -- Start with all folds open
 vim.wo.foldenable = true -- Enable folding (set to false to disable folding entirely)
+
+-- disable sql omnicompletion

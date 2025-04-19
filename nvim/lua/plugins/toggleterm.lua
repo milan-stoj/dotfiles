@@ -2,5 +2,7 @@ return {
   -- or
   'akinsho/toggleterm.nvim',
   version = '*',
-  opts = {},
+  opts = {
+    open_mapping = [[<c-\>]],
+  },
 }

@@ -28,7 +28,6 @@ return {
     'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
     'ibhagwan/fzf-lua', -- for file_selector provider fzf
     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-    { 'zbirenbaum/copilot.lua', opts = {} }, -- for providers='copilot'
     {
       -- support for image pasting
       'HakonHarnes/img-clip.nvim',

@@ -40,7 +40,7 @@ vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Keymap to open the index.md file in Obsidian vault
 vim.keymap.set('n', '<leader>oi', function()
-  vim.cmd 'edit ~/Obsidian/pkm-vault/300-maps/index.md'
+  vim.cmd 'edit ~/Obsidian/pkm-vault/Index.md'
 end, { desc = 'Open Obsidian index file' })
 
 -- Keymap to open today's daily note in Obsidian

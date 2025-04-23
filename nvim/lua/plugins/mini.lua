@@ -19,7 +19,6 @@ return {
     require('mini.pairs').setup()
     require('mini.surround').setup()
     require('mini.bufremove').setup()
-    require('mini.animate').setup()
     require('mini.notify').setup()
     require('mini.starter').setup()
     require('mini.tabline').setup {

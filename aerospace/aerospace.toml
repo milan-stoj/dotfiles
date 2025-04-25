@@ -54,15 +54,15 @@ alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
 alt-q = 'close --quit-if-last-window'
 
 alt-1 = 'workspace 🏠'
-alt-2 = 'workspace 📥'
-alt-3 = 'workspace 👾'
-alt-4 = 'workspace 📝'
+alt-2 = 'workspace 👾'
+alt-3 = 'workspace 📝'
+alt-4 = 'workspace 📥'
 alt-5 = 'workspace 🎧'
 
 alt-shift-1 = 'move-node-to-workspace 🏠'
-alt-shift-2 = 'move-node-to-workspace 📥'
-alt-shift-3 = 'move-node-to-workspace 👾'
-alt-shift-4 = 'move-node-to-workspace 📝'
+alt-shift-2 = 'move-node-to-workspace 👾'
+alt-shift-3 = 'move-node-to-workspace 📝'
+alt-shift-4 = 'move-node-to-workspace 📥'
 alt-shift-5 = 'move-node-to-workspace 🎧'
 
 alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
@@ -93,9 +93,9 @@ backspace = ['close-all-windows-but-current', 'mode main']
 
 [workspace-to-monitor-force-assignment]
 '🏠' = 1
-'📥' = 1
 '👾' = [2, 1]
 '📝' = [3, 1]
+'📥' = 1
 '🎧' = 1
 
 # [[on-window-detected]]

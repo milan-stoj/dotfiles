@@ -26,8 +26,10 @@ local bundles = {
   vim.fn.glob(home .. '/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar'),
 }
 
+local extra_bundles = vim.fn.glob(home .. '/source/vscode-java-test/server/*.jar', true, true, true)
+
 -- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '.local/share/nvim/mason/packages/java-test/extension/server', true), '\n'))
+vim.list_extend(bundles, extra_bundles)
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {

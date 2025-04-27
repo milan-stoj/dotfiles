@@ -27,6 +27,7 @@ return {
       },
       filetypes = {
         lua = true,
+        java = true,
         yaml = false, -- Disable Copilot for YAML files
         markdown = true, -- Enable Copilot for Markdown files
         help = false, -- Disable Copilot for help files

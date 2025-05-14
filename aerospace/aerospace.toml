@@ -7,7 +7,7 @@ after-startup-command = [
 
 automatically-unhide-macos-hidden-apps = true
 
-default-root-container-layout = 'accordion'
+# default-root-container-layout = 'accordion'
 
 # i3 doesn't have "normalizations" feature that why we disable them here.
 # But the feature is very helpful.
@@ -17,8 +17,9 @@ enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # Mouse follows focus when focused monitor changes
-on-focused-monitor-changed = []
-on-focus-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+on-focus-changed = ['move-mouse window-lazy-center']
 
 accordion-padding = 16
 
@@ -59,6 +60,7 @@ alt-3 = 'workspace 📝'
 alt-4 = 'workspace 📥'
 alt-5 = 'workspace 🎧'
 
+# add --focus-follows-window to go to next space when window is moved.
 alt-shift-1 = 'move-node-to-workspace 🏠'
 alt-shift-2 = 'move-node-to-workspace 👾'
 alt-shift-3 = 'move-node-to-workspace 📝'

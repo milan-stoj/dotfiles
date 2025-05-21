@@ -2,12 +2,12 @@
 after-startup-command = [
 # JankyBorders has a built-in detection of already running process,
 # so it won't be run twice on AeroSpace restart
-  'exec-and-forget borders order=above active_color=0xFF00FFFF inactive_color=0x00000000 width=2.0',
+#'exec-and-forget borders order=below style=square active_color=0xFF00FFFF inactive_color=0x00000000 width=2.0',
 ]
 
 automatically-unhide-macos-hidden-apps = true
-
-# default-root-container-layout = 'accordion'
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
 
 # i3 doesn't have "normalizations" feature that why we disable them here.
 # But the feature is very helpful.
@@ -97,8 +97,8 @@ backspace = ['close-all-windows-but-current', 'mode main']
 '🏠' = 1
 '👾' = [2, 1]
 '📝' = [3, 1]
-'📥' = 1
-'🎧' = 1
+# '📥' = 1
+# '🎧' = 1
 
 # [[on-window-detected]]
 #     if.app-id = 'com.apple.systempreferences'
@@ -115,12 +115,8 @@ run = ['layout floating']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'slack'
-run = ['move-node-to-workspace 📥']
+run = ['move-node-to-workspace 🏠']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'outlook'
-run = ['move-node-to-workspace 📥']
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'IntelliJ IDEA'
-run = ['move-node-to-workspace 📥']
+run = ['move-node-to-workspace 🏠']

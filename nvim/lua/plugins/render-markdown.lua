@@ -6,11 +6,11 @@ return {
     heading = {
       position = 'inline',
     },
-    indent = {
-      enabled = true,
-      render_modes = true,
-      highlight = 'RenderMarkdownIndent',
-    },
+    -- indent = {
+    --   enabled = true,
+    --   render_modes = true,
+    --   highlight = 'RenderMarkdownIndent',
+    -- },
     quote = {
       repeat_linebreak = true,
     },

@@ -9,6 +9,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'saghen/blink.cmp',
+    'onsails/lspkind.nvim',
 
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
@@ -246,6 +247,7 @@ return {
       'stylua', -- Used to format Lua code
       'java-debug-adapter', -- Java Debug Adapter
       'java-test', -- Java Test Adapter
+      'checkstyle',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

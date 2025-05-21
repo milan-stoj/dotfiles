@@ -31,6 +31,12 @@ local extra_bundles = vim.fn.glob(home .. '/source/vscode-java-test/server/*.jar
 -- Needed for running/debugging unit tests
 vim.list_extend(bundles, extra_bundles)
 
+vim.bo.tabstop = 2
+vim.bo.shiftwidth = 2
+vim.bo.expandtab = true
+vim.bo.autoindent = true
+vim.bo.smartindent = true
+
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   -- The command that starts the language server
@@ -81,8 +87,7 @@ local config = {
       format = {
         enabled = true,
         settings = {
-          url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml',
-          profile = 'GoogleStyle',
+          url = '/Users/nfc7148/code-style/java/default.xml',
         },
       },
       completion = {},

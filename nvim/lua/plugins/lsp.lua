@@ -145,6 +145,11 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
         end
+
+        -- if LSP is clangd, disable semanticTokensProvider
+        if client and client.name == 'clangd' then
+          client.server_capabilities.semanticTokensProvider = nil
+        end
       end,
     })
 
@@ -193,7 +198,18 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      -- clangd = {},
+      clangd = {
+        cmd = { '/opt/homebrew/opt/llvm/bin/clangd', '--header-insertion=never', '--extra-arg=-Iquantum', '--compile-commands-dir=.' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        capabilities = {
+          offsetEncoding = { 'utf-8' },
+          textDocument = {
+            semanticTokens = {
+              dynamicRegistration = false,
+            },
+          },
+        },
+      },
       -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},

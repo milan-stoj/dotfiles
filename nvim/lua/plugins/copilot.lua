@@ -18,6 +18,5 @@ return {
       markdown = true,
       help = true,
     },
-    copilot_node_command = vim.fn.expand '$HOME' .. '/.nvm/versions/node/v23.6.0/bin/node',
   },
 }

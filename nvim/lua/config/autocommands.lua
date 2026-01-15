@@ -1,6 +1,3 @@
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -33,5 +30,12 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.keymap.set('n', '<BS>', '<C-o>', { buffer = true, desc = 'Go back in jump list' })
       end,
     })
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function()
+    vim.treesitter.start()
   end,
 })

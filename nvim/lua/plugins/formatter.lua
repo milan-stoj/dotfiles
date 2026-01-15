@@ -33,11 +33,11 @@ return {
       lua = { 'stylua' },
       html = { 'prettier' },
       python = { 'isort', 'black' },
-      java = { 'nvim-jdlts' },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettier' },
       json = { 'prettier' },
+      c = { 'clang-format' },
     },
   },
 }

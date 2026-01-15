@@ -11,10 +11,6 @@ return {
       .. '/Obsidian/pkm-vault/*.md',
     'BufNewFile ' .. vim.fn.expand '~' .. '/Obsidian/pkm-vault/*.md',
   },
-  dependencies = {
-    -- Required.
-    'nvim-lua/plenary.nvim',
-  },
   opts = {
     workspaces = {
       {
@@ -26,10 +22,6 @@ return {
     completion = {
       blink = true,
       min_chars = 2,
-    },
-
-    ui = {
-      enable = false,
     },
 
     templates = {

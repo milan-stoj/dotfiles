@@ -1,0 +1,190 @@
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+(setq user-full-name "Milan Stojanovic"
+      user-mail-address "milanstojanovic@northwesternmutual.com")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
+
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+;;
+(setq doom-theme 'doom-gruvbox)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type 'relative)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+(after! org
+
+  (dolist (face '((org-level-1 . 1.35)
+                  (org-level-2 . 1.30)
+                  (org-level-3 . 1.20)
+                  (org-level-4 . 1.10)
+                  (org-level-5 . 1.10)
+                  (org-level-6 . 1.10)
+                  (org-level-7 . 1.10)
+                  (org-level-8 . 1.10)))
+
+    (set-face-attribute (car face) nil
+                        :weight 'bold
+                        :height (cdr face)))
+
+  (set-face-attribute 'org-document-title nil
+                      :weight 'bold
+                      :height 1.8)
+
+  (setq org-agenda-files '("~/org")
+        org-adapt-indentation t
+        org-hide-leading-stars t
+        org-pretty-entities t
+        org-ellipsis " ▾"
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0
+        org-agenda-include-diary t
+        org-capture-templates
+        `(
+          ;; 1) Inbox (default capture)
+          ("i" "Inbox" entry
+           (file ,(expand-file-name "inbox.org" org-directory))
+           "* TODO %?\n %i\n %a"
+           :empty-lines 1)
+          ;; 2) Quick task to todo.org (goes to Next Actions)
+          ("t" "Task" entry
+           (file+headline ,(expand-file-name "todo.org" org-directory) "Next Actions")
+           "* TODO %?\n %U\n %a\n"
+           :empty-lines 1)
+          ;; 3) Meeting action item (drops into todo.org, links back to source)
+          ("m" "Meeting Action Item" entry
+           (file+headline ,(expand-file-name "todo.org" org-directory) "Next Actions")
+           "* TODO %?:meeting:\n %U\n %a\n"
+           :empty-lines 1)
+          ;; 4) Journal entry (single file journal)
+          ("j" "Journal" entry
+           (file+datetree ,(expand-file-name "journal.org" org-directory))
+           "* %?\n %U\n"
+           :empty-lines 1)
+          ))
+
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 0.85)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  )
+
+(after! org-indent
+  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch)))
+
+(add-hook! org-mode #'visual-line-mode)
+
+(after! org-roam
+  ;; Adjust if your org-roam dir is different
+  ;; (setq org-roam-directory (file-truename "~/org/roam/"))
+
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %?" :target
+           (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n-----\n* Work\n** Meetings\n*** Standup\n**** Yesterday\n- \n**** Today\n- \n**** Blockers\n- \n"))))
+
+  (setq org-roam-capture-templates
+        (append
+         org-roam-capture-templates
+         '(("m" "Meeting" plain
+            "* Attendees\n- %?\n\n* Related\n- \n\n* Agenda\n- \n\n* Notes\n\n* Decisions\n- \n\n* Action Items\n- [ ] \n"
+            :if-new (file+head "meetings/%<%Y-%m-%d>--${slug}.org"
+                               "#+title: %<%Y-%m-%d> – ${title}\n#+filetags: :meeting:\n\n")
+            :unnarrowed t)))))
+
+
+(defun my/find-code-notes ()
+  "Find TODO/FIXME/HACK comments in the current project."
+  (interactive)
+  (let ((keywords '("TODO" "FIXME" "HACK")))
+    (consult-ripgrep nil (mapconcat #'identity keywords "\\|"))))
+
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+
+(setq fancy-splash-image (concat doom-private-dir "splash.png"))
+
+(after! lsp-java
+  (setq lsp-java-vmargs `(
+                          "-XX:+UseParallelGC"
+                          "-XX:GCTimeRatio=4"
+                          "-XX:AdaptiveSizePolicyWeight=90"
+                          "-Dsun.zip.disableMemoryMapping=true"
+                          "-Xmx1G"
+                          "-Xms100m"
+                          "-javaagent:/Users/nfc7148/.m2/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar"
+                          )
+        )
+  )
+
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.

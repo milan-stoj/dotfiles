@@ -9,6 +9,7 @@
 ;;
 ;; Use 'C-h f package\!' to look up documentation for the `package!' macro.
 ;;
+(package! fountain-mode)
 (package! copilot-chat)
 
 (package! copilot

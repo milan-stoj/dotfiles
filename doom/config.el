@@ -23,7 +23,9 @@
 ;;
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Propo" :size 13)
+      )
 
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -56,10 +58,12 @@
                   (org-level-8 . 1.10)))
 
     (set-face-attribute (car face) nil
+                        :family "JetBrainsMono Nerd Font Propo"
                         :weight 'bold
                         :height (cdr face)))
 
   (set-face-attribute 'org-document-title nil
+                      :family "JetBrainsMono Nerd Font Propo"
                       :weight 'bold
                       :height 1.8)
 
@@ -106,7 +110,8 @@
 (after! org-indent
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch)))
 
-(add-hook! org-mode #'visual-line-mode)
+;; Enable visual line wrapping in org-mode
+(add-hook! org-mode 'visual-line-mode)
 
 (after! org-roam
   ;; Adjust if your org-roam dir is different

@@ -46,6 +46,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+(add-hook 'writeroom-mode-hook (lambda () (display-line-numbers-mode -1)))
+
 (after! org
 
   (dolist (face '((org-level-1 . 1.35)
@@ -75,31 +77,21 @@
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-edit-src-content-indentation 0
-        ;; remove diary from agenda view
         org-agenda-include-diary nil
         org-capture-templates
         `(
-          ;; 0) General note
+          ;; 1) General note
           ("n" "Note" entry
-           (file ,(expand-file-name "notes.org" org-directory))
-           "* %? \n %U\n %a\n"
+           (file+headline ,(expand-file-name "inbox.org" org-directory), "Notes")
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
            :empty-lines 1)
           ;; 1) Inbox (default capture)
-          ("i" "Inbox" entry
-           (file ,(expand-file-name "inbox.org" org-directory))
-           "* TODO %?\n %U\n %a"
+          ("i" "Inbox task" entry
+           (file+headline ,(expand-file-name "inbox.org" org-directory), "Inbox")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
            :empty-lines 1)
-          ;; 2) Quick task to todo.org (goes to Tasks)
-          ("t" "Todo" entry
-           (file+headline ,(expand-file-name "todo.org" org-directory), "Tasks")
-           "* TODO %?\n  %i\n\n  %a"
-           :empty-lines 1)
-          ;; 3) Meeting action item (drops into todo.org, links back to source)
-          ("m" "Meeting Action Item" entry
-           (file+headline ,(expand-file-name "todo.org" org-directory) "Meeting Action Items")
-           "* TODO %?:meeting:\n %T\n %a\n"
-           :empty-lines 1)
-          ))
+          )
+        )
 
   (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 0.85)
   (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 0.85)
@@ -115,21 +107,10 @@
 (add-hook! org-mode 'visual-line-mode)
 
 (after! org-roam
-  ;; Adjust if your org-roam dir is different
-  ;; (setq org-roam-directory (file-truename "~/org/roam/"))
-
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %?" :target
-           (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n-----\n* Work\n** Meetings\n*** Standup\n**** Yesterday\n- \n**** Today\n- \n**** Blockers\n- \n"))))
-
-  (setq org-roam-capture-templates
-        (append
-         org-roam-capture-templates
-         '(("m" "Meeting" plain
-            "* Attendees\n- %?\n\n* Related\n- \n\n* Agenda\n- \n\n* Notes\n\n* Decisions\n- \n\n* Action Items\n- [ ] \n"
-            :if-new (file+head "meetings/%<%Y-%m-%d>--${slug}.org"
-                               "#+title: %<%Y-%m-%d> – ${title}\n#+filetags: :meeting:\n\n")
-            :unnarrowed t)))))
+           (file+head "%<%Y-%m-%d>.org"
+                      "#+title: %<%Y-%m-%d>\n#+created: %U\n-----\n* Plan\n\n* Log\n\n* Meetings\n\n* Notes\n\n* Follow-ups\n")))))
 
 
 (defun my/find-code-notes ()

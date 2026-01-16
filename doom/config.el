@@ -71,32 +71,33 @@
         org-adapt-indentation t
         org-hide-leading-stars t
         org-pretty-entities t
-        org-ellipsis " ▾"
+        org-ellipsis "⤵"
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-edit-src-content-indentation 0
-        org-agenda-include-diary t
+        ;; remove diary from agenda view
+        org-agenda-include-diary nil
         org-capture-templates
         `(
+          ;; 0) General note
+          ("n" "Note" entry
+           (file ,(expand-file-name "notes.org" org-directory))
+           "* %? \n %U\n %a\n"
+           :empty-lines 1)
           ;; 1) Inbox (default capture)
           ("i" "Inbox" entry
            (file ,(expand-file-name "inbox.org" org-directory))
-           "* TODO %?\n %i\n %a"
+           "* TODO %?\n %U\n %a"
            :empty-lines 1)
-          ;; 2) Quick task to todo.org (goes to Next Actions)
-          ("t" "Task" entry
-           (file+headline ,(expand-file-name "todo.org" org-directory) "Next Actions")
-           "* TODO %?\n %U\n %a\n"
+          ;; 2) Quick task to todo.org (goes to Tasks)
+          ("t" "Todo" entry
+           (file+headline ,(expand-file-name "todo.org" org-directory), "Tasks")
+           "* TODO %?\n  %i\n\n  %a"
            :empty-lines 1)
           ;; 3) Meeting action item (drops into todo.org, links back to source)
           ("m" "Meeting Action Item" entry
-           (file+headline ,(expand-file-name "todo.org" org-directory) "Next Actions")
-           "* TODO %?:meeting:\n %U\n %a\n"
-           :empty-lines 1)
-          ;; 4) Journal entry (single file journal)
-          ("j" "Journal" entry
-           (file+datetree ,(expand-file-name "journal.org" org-directory))
-           "* %?\n %U\n"
+           (file+headline ,(expand-file-name "todo.org" org-directory) "Meeting Action Items")
+           "* TODO %?:meeting:\n %T\n %a\n"
            :empty-lines 1)
           ))
 
@@ -166,7 +167,16 @@
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+              ("C-<tab>" . 'copilot-accept-completion-by-word)
+              ("C-n" . 'copilot-next-completion)
+              ("C-p" . 'copilot-previous-completion))
+
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(clojure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 ;;
 ;; The exceptions to this rule:
 ;;
@@ -184,6 +194,22 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
+;;
+;;
+(setq elfeed-feeds
+      '("http://nullprogram.com/feed/"
+        "https://planet.emacslife.com/atom.xml"
+        "https://https://blog.codinghorror.com/rss/"
+        "https://martinfowler.com/feed.atom"
+        "https://softwareengineeringdaily.com/feed/"
+        "https://javaworld.com/index.rss"
+        "https://github.blog/engineering/feed/"
+        "https://sciencedaily.com/rss/top"
+        "https://rsshub.app/apnews/topics/apf-topnews"
+        "https://www.nasa.gov/news-release/feed/"
+        "https://www.nasa.gov/feeds/iotd-feed/"
+        "https://www.apple.com/ca/newsroom/rss-feed.rss"
+        "http://developer.apple.com/news/rss/news.rss"))
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').

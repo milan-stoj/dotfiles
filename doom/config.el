@@ -87,7 +87,7 @@
            :empty-lines 1)
           ;; 1) Inbox (default capture)
           ("i" "Inbox task" entry
-           (file+headline ,(expand-file-name "inbox.org" org-directory), "Inbox")
+           (file+headline ,(expand-file-name "inbox.org" org-directory), "Tasks")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
            :empty-lines 1)
           )
@@ -111,7 +111,6 @@
         '(("d" "default" entry "* %?" :target
            (file+head "%<%Y-%m-%d>.org"
                       "#+title: %<%Y-%m-%d>\n#+created: %U\n-----\n* Plan\n\n* Log\n\n* Meetings\n\n* Notes\n\n* Follow-ups\n")))))
-
 
 (defun my/find-code-notes ()
   "Find TODO/FIXME/HACK comments in the current project."
@@ -143,7 +142,6 @@
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
-  :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
@@ -178,16 +176,15 @@
 ;;
 ;;
 (setq elfeed-feeds
-      '("http://nullprogram.com/feed/"
-        "https://planet.emacslife.com/atom.xml"
+      '("https://planet.emacslife.com/atom.xml"
         "https://https://blog.codinghorror.com/rss/"
         "https://martinfowler.com/feed.atom"
         "https://softwareengineeringdaily.com/feed/"
         "https://javaworld.com/index.rss"
         "https://github.blog/engineering/feed/"
+        "https://news.google.com/rss"
+        "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
         "https://sciencedaily.com/rss/top"
-        "https://rsshub.app/apnews/topics/apf-topnews"
-        "https://www.nasa.gov/news-release/feed/"
         "https://www.nasa.gov/feeds/iotd-feed/"
         "https://www.apple.com/ca/newsroom/rss-feed.rss"
         "http://developer.apple.com/news/rss/news.rss"))

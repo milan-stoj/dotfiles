@@ -103,7 +103,7 @@
        lsp
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
-       ;;pass              ; password manager for nerds
+       pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -190,7 +190,7 @@
        calendar
        ;;emms
        ;;everywhere        ; *leave* Emacs!? You must be joking
-       ;;irc               ; how neckbeards socialize
+       irc               ; how neckbeards socialize
        rss
 
        :config

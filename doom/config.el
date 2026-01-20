@@ -195,8 +195,8 @@
   `(:tls t
     :port 6697
     :nick "milan-stoj"
-    :sasl-username ,(+pass-get-user   "irc/libera.chat")
-    :sasl-password ,(+pass-get-secret "irc/libera.chat")
+    :sasl-username "milan-stoj"
+    :sasl-password ,(+pass-get-secret "irc/libera.chat/milan-stoj")
     :channels ("#emacs")))
 
 

@@ -13,6 +13,7 @@
 (package! copilot-chat)
 (package! fireplace)
 (package! auto-dark)
+(package! jira)
 
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))

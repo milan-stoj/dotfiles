@@ -43,7 +43,7 @@
   :init
   (setq auto-dark-allow-osascript t)
   ;; Configure themes
-  (setq! auto-dark-themes '((doom-solarized-dark) (doom-solarized-light)))
+  (setq! auto-dark-themes '((doom-gruvbox) (doom-gruvbox-light)))
   ;; Disable doom's theme loading mechanism (just to make sure)
   (setq! doom-theme nil)
   ;; Declare that all themes are safe to load.
@@ -201,8 +201,15 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-;;
-;;
+
+(use-package! jira
+  :config
+  (setq jira-base-url "https://nwm.atlassian.net")
+  (setq jira-token-is-personal-access-token nil)
+  (setq jira-api-version 2)
+  (setq jira-debug t)
+  )
+
 (setq elfeed-feeds
       '("https://planet.emacslife.com/atom.xml"
         "https://https://blog.codinghorror.com/rss/"

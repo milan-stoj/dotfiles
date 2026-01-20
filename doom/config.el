@@ -38,6 +38,34 @@
 ;;
 (setq doom-theme 'doom-gruvbox)
 
+(use-package! auto-dark
+  :defer t
+  :init
+  (setq auto-dark-allow-osascript t)
+  ;; Configure themes
+  (setq! auto-dark-themes '((doom-solarized-dark) (doom-solarized-light)))
+  ;; Disable doom's theme loading mechanism (just to make sure)
+  (setq! doom-theme nil)
+  ;; Declare that all themes are safe to load.
+  ;; Be aware that setting this variable may have security implications if you
+  ;; get tricked into loading untrusted themes (via auto-dark-mode or manually).
+  ;; See the documentation of custom-safe-themes for details.
+  (setq! custom-safe-themes t)
+  ;; Enable auto-dark-mode at the right point in time.
+  ;; This is inspired by doom-ui.el. Using server-after-make-frame-hook avoids
+  ;; issues with an early start of the emacs daemon using systemd, which causes
+  ;; problems with the DBus connection that auto-dark mode relies upon.
+  (defun my-auto-dark-init-h ()
+    (auto-dark-mode)
+    (remove-hook 'server-after-make-frame-hook #'my-auto-dark-init-h)
+    (remove-hook 'after-init-hook #'my-auto-dark-init-h))
+  (let ((hook (if (daemonp)
+                  'server-after-make-frame-hook
+                'after-init-hook)))
+    ;; Depth -95 puts this before doom-init-theme-h, which sounds like a good
+    ;; idea, if only for performance reasons.
+    (add-hook hook #'my-auto-dark-init-h -95)))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
@@ -191,13 +219,13 @@
 
 
 ;; if you omit =:host=, ~SERVER~ is used instead.
-(set-irc-server! "irc.libera.chat"
-  `(:tls t
-    :port 6697
-    :nick "milan-stoj"
-    :sasl-username "milan-stoj"
-    :sasl-password ,(+pass-get-secret "irc/libera.chat/milan-stoj")
-    :channels ("#emacs")))
+;; (set-irc-server! "irc.libera.chat"
+;;  `(:tls t
+;;     :port 6697
+;;     :nick "milan-stoj"
+;;     :sasl-username "milan-stoj"
+;;     :sasl-password ,(+pass-get-secret "irc/libera.chat/milan-stoj")
+;;     :channels ("#emacs")))
 
 
 ;; To get information about any of these functions/macros, move the cursor over

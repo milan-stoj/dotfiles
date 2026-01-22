@@ -24,7 +24,7 @@
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Propo" :size 13)
+      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
       )
 
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -36,14 +36,39 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;
-(setq doom-theme 'doom-gruvbox)
+
+(defun my/apply-org-fonts ()
+  "Apply variable pitch fonts to org-mode headings."
+  (dolist (face '((org-level-1 . 1.35)
+                  (org-level-2 . 1.30)
+                  (org-level-3 . 1.20)
+                  (org-level-4 . 1.10)
+                  (org-level-5 . 1.10)
+                  (org-level-6 . 1.10)
+                  (org-level-7 . 1.10)
+                  (org-level-8 . 1.10)))
+    (set-face-attribute (car face) nil
+                        :family "DejaVu Sans"
+                        :weight 'bold
+                        :height (cdr face)))
+  (set-face-attribute 'org-document-title nil
+                      :family "DejaVu Sans"
+                      :weight 'bold
+                      :height 1.8)
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 0.85)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (when (facep 'org-indent)
+    (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))))
 
 (use-package! auto-dark
   :defer t
   :init
   (setq auto-dark-allow-osascript t)
   ;; Configure themes
-  (setq! auto-dark-themes '((doom-gruvbox) (doom-gruvbox-light)))
+  (setq! auto-dark-themes '((doom-nord) (doom-nord-light)))
   ;; Disable doom's theme loading mechanism (just to make sure)
   (setq! doom-theme nil)
   ;; Declare that all themes are safe to load.
@@ -64,7 +89,10 @@
                 'after-init-hook)))
     ;; Depth -95 puts this before doom-init-theme-h, which sounds like a good
     ;; idea, if only for performance reasons.
-    (add-hook hook #'my-auto-dark-init-h -95)))
+    (add-hook hook #'my-auto-dark-init-h -95))
+  :config
+  (add-hook 'auto-dark-dark-mode-hook #'my/apply-org-fonts)
+  (add-hook 'auto-dark-light-mode-hook #'my/apply-org-fonts))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -77,25 +105,7 @@
 (add-hook 'writeroom-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 (after! org
-
-  (dolist (face '((org-level-1 . 1.35)
-                  (org-level-2 . 1.30)
-                  (org-level-3 . 1.20)
-                  (org-level-4 . 1.10)
-                  (org-level-5 . 1.10)
-                  (org-level-6 . 1.10)
-                  (org-level-7 . 1.10)
-                  (org-level-8 . 1.10)))
-
-    (set-face-attribute (car face) nil
-                        :family "JetBrainsMono Nerd Font Propo"
-                        :weight 'bold
-                        :height (cdr face)))
-
-  (set-face-attribute 'org-document-title nil
-                      :family "JetBrainsMono Nerd Font Propo"
-                      :weight 'bold
-                      :height 1.8)
+  (my/apply-org-fonts)
 
   (setq org-agenda-files '("~/org")
         org-adapt-indentation t
@@ -119,17 +129,7 @@
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
            :empty-lines 1)
           )
-        )
-
-  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 0.85)
-  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  )
-
-(after! org-indent
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch)))
+        ))
 
 ;; Enable visual line wrapping in org-mode
 (add-hook! org-mode 'visual-line-mode)

@@ -14,6 +14,8 @@
 (package! fireplace)
 (package! auto-dark)
 (package! jira)
+(package! ox-gfm)
+(package! obsidian)
 
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))

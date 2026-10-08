@@ -1,11 +1,13 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+-- ============================================================================
+-- General / Misc
+-- ============================================================================
 
--- Clear highlights on search when pressing <Esc> in normal mode
+local Snacks = require('snacks')
+vim.keymap.set('n', '<leader>nr', '<cmd>restart<cr>', { desc = 'Restart Neovim and reload config.' })
+
 --  See `:help hlsearch`
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -25,72 +27,124 @@ vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 --
 --  See `:help wincmd` for a list of all window commands
+-- ============================================================================
+-- Windows / Splits
+-- ============================================================================
+vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>', { desc = 'Split vertical' })
+vim.keymap.set('n', '<leader>ws', '<cmd>split<CR>', { desc = 'Split horizontal' })
+vim.keymap.set('n', '<leader>wc', '<cmd>close<CR>', { desc = 'Close window' })
+vim.keymap.set('n', '<leader>wo', '<cmd>only<CR>', { desc = 'Close other windows' })
+
+-- Move between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Exit insert mode' })
+vim.keymap.set('n', '<A-k>', '<C-w>+', { desc = 'Increase height' })
+vim.keymap.set('n', '<A-j>', '<C-w>-', { desc = 'Decrease height' })
+vim.keymap.set('n', '<A-l>', '<C-w>>', { desc = 'Increase width' })
+vim.keymap.set('n', '<A-h>', '<C-w><', { desc = 'Decrease width' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+-- vim.keymap.set('n', '<C-S-H>', '<C-w>H', { desc = 'Move window to the left' })
+-- vim.keymap.set('n', '<C-S-L>', '<C-w>L', { desc = 'Move window to the right' })
+-- vim.keymap.set('n', '<C-S-J>', '<C-w>J', { desc = 'Move window to the lower' })
+-- vim.keymap.set('n', '<C-S-K>', '<C-w>K', { desc = 'Move window to the upper' })
 
--- Keymap to open the index.md file in Obsidian vault
-vim.keymap.set('n', '<leader>oi', function()
-  vim.cmd 'edit ~/Obsidian/pkm-vault/Index.md'
-end, { desc = 'Open Obsidian index file' })
+-- ============================================================================
+-- Buffers
+-- ============================================================================
+vim.keymap.set('n', '<leader>bn', '<cmd>bn<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', '<cmd>bp<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<leader>bd', function()
+  Snacks.bufdelete()
+end, { desc = 'Delete buffer' })
 
--- Keymap to open today's daily note in Obsidian
-vim.keymap.set('n', '<leader>odt', function()
-  -- Load the obsidian.nvim plugin using lazy.nvim
-  require('lazy').load { plugins = { 'obsidian.nvim' } }
-  -- Run the ObsidianToday command
-  vim.cmd 'ObsidianToday'
-end, { desc = "Open today's daily note in Obsidian" })
+-- ============================================================================
+-- Tabs / Workspaces
+-- ============================================================================
+vim.keymap.set('n', '<leader><TAB>n', '<cmd>tabnew<CR>', { desc = 'New tab' })
+vim.keymap.set('n', '<leader><TAB>c', '<cmd>tabclose<CR>', { desc = 'Close tab' })
+vim.keymap.set('n', '<leader><TAB>o', '<cmd>tabonly<CR>', { desc = 'Close other tabs' })
+vim.keymap.set('n', '<leader><TAB>h', '<cmd>tabprevious<CR>', { desc = 'Previous tab' })
+vim.keymap.set('n', '<leader><TAB>l', '<cmd>tabnext<CR>', { desc = 'Next tab' })
+-- Jump to tabs
+vim.keymap.set('n', '<leader><TAB>1', '1gt', { desc = 'Tab 1' })
+vim.keymap.set('n', '<leader><TAB>2', '2gt', { desc = 'Tab 2' })
+vim.keymap.set('n', '<leader><TAB>3', '3gt', { desc = 'Tab 3' })
+vim.keymap.set('n', '<leader><TAB>4', '4gt', { desc = 'Tab 4' })
+vim.keymap.set('n', '<leader><TAB>5', '5gt', { desc = 'Tab 5' })
 
--- Keymap to open tomorrows daily not in buffer
-vim.keymap.set('n', '<leader>odm', function()
-  -- Load the obsidian.nvim plugin using lazy.nvim
-  require('lazy').load { plugins = { 'obsidian.nvim' } }
-  -- Run the ObsidianTomorrow command
-  vim.cmd 'ObsidianTomorrow'
-end, { desc = "Open tomorrow's daily note in Obsidian" })
+--
 
--- Keymap to open yesterdays daily note in buffer
-vim.keymap.set('n', '<leader>ody', function()
-  -- Load the obsidian.nvim plugin using lazy.nvim
-  require('lazy').load { plugins = { 'obsidian.nvim' } }
-  -- Run the ObsidianYesterday command
-  vim.cmd 'ObsidianYesterday'
-end, { desc = "Open yesterday's daily note in Obsidian" })
-
--- keymap to sync the vault with git
-vim.keymap.set('n', '<leader>ovs', function()
-  local vault_path = os.getenv 'HOME' .. '/Obsidian/pkm-vault'
-  local handle = io.popen "date '+%Y-%m-%d %H:%M:%S'"
-  local datetime = handle:read('*a'):gsub('\n', '')
-  handle:close()
-  local commit_msg = 'work vault backup: ' .. datetime
-  local function run_git(cmd)
-    vim.fn.system('cd ' .. vault_path .. ' && ' .. cmd)
+local function open_project_tab()
+  local dir = vim.fn.input('Project directory: ', vim.fn.expand '~/', 'dir')
+  if dir == '' then
+    return
   end
-  run_git 'git add .'
-  run_git("git commit -m '" .. commit_msg .. "'")
-  run_git 'git push'
-  print('Vault synced: ' .. commit_msg)
-end, { desc = 'Sync Obsidian vault with git', silent = false })
 
-vim.keymap.set('n', '<leader>tc', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').test_class() -- run the test class
-  end
-end)
+  dir = vim.fs.normalize(vim.fn.expand(dir))
+  vim.cmd.tabnew()
+  vim.cmd.tcd(vim.fn.fnameescape(dir))
 
-vim.keymap.set('n', '<leader>tm', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').test_nearest_method()
-  end
-end)
+  vim.api.nvim_tabpage_set_var(0, 'project_root', dir)
+  Snacks.picker.files {
+    cwd = dir,
+  }
+end
+
+vim.keymap.set('n', '<leader><TAB>p', open_project_tab, { desc = 'Open a project in new tab' })
+
+-- ============================================================================
+-- Neotest
+-- ============================================================================
+local function testmap(key, callback, description)
+  vim.keymap.set('n', '<leader>ct' .. key, function()
+    callback(require 'neotest')
+  end, { desc = 'Test: ' .. description })
+end
+
+testmap('n', function(t)
+  t.run.run()
+end, 'Run nearest')
+
+testmap('f', function(t)
+  t.run.run(vim.fn.expand '%:p')
+end, 'Run file')
+
+testmap('a', function(t)
+  t.run.run(vim.fn.getcwd())
+end, 'Run current directory')
+
+testmap('l', function(t)
+  t.run.run_last()
+end, 'Run last')
+
+testmap('d', function(t)
+  t.run.run { strategy = 'dap' }
+end, 'Debug nearest')
+
+testmap('s', function(t)
+  t.summary.toggle()
+end, 'Toggle summary')
+
+testmap('o', function(t)
+  t.output.open { enter = true }
+end, 'Show nearest result')
+
+testmap('O', function(t)
+  t.output_panel.toggle()
+end, 'Toggle full output')
+
+testmap('x', function(t)
+  t.run.stop()
+end, 'Stop nearest')
+
+testmap('j', function(t)
+  t.jump.next { status = 'failed' }
+end, 'Next failure')
+
+testmap('k', function(t)
+  t.jump.prev { status = 'failed' }
+end, 'Previous failure')

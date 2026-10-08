@@ -1,9 +1,17 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
-after-startup-command = [
-# JankyBorders has a built-in detection of already running process,
+config-version = 2
+
+persistent-workspaces = ["🏠", "📹", "🎧", "👾","🌎", "🛠", "📚", "📟", "🔎", "E"]
+
+# Run Sketchybar together with AeroSpace
+# sketchybar has a built-in detection of already running process,
 # so it won't be run twice on AeroSpace restart
-#'exec-and-forget borders order=below style=square active_color=0xFF00FFFF inactive_color=0x00000000 width=2.0',
-]
+# after-startup-command = ['exec-and-forget sketchybar']
+
+# Notify Sketchybar about workspace change
+# exec-on-workspace-change = ['/bin/bash', '-c',
+#    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+# ]
 
 automatically-unhide-macos-hidden-apps = true
 default-root-container-layout = 'tiles'
@@ -24,65 +32,81 @@ on-focus-changed = ['move-mouse window-lazy-center']
 accordion-padding = 16
 
 [gaps]
-inner.horizontal = 16
-inner.vertical =   16
-outer.left =       16
-outer.bottom =     16
-outer.top =        16
-outer.right =      16
+    inner.horizontal = 16
+    inner.vertical =   16
+    outer.left =       16
+    outer.bottom =     16
+    outer.top =        16
+    outer.right =      16
 
 [mode.main.binding]
-# i3 wraps focus by default
-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
-alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+    # i3 wraps focus by default
+    alt-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
+    alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors down'
+    alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors up'
+    alt-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+    alt-shift-h = 'move left'
+    alt-shift-j = 'move down'
+    alt-shift-k = 'move up'
+    alt-shift-l = 'move right'
 
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
+    alt-shift-minus = 'resize smart -64'
+    alt-shift-equal = 'resize smart +64'
 
-alt-f = 'fullscreen'
-alt-s = 'layout v_accordion' # 'layout stacking' in i3
-alt-w = 'layout h_accordion' # 'layout tabbed' in i3
-alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+    alt-f = 'fullscreen'
+    alt-s = 'layout v_accordion' # 'layout stacking' in i3
+    alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+    alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
 
-alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
-alt-q = 'close --quit-if-last-window'
+    alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+    alt-q = 'close --quit-if-last-window'
 
-alt-1 = 'workspace 🏠'
-alt-2 = 'workspace 👾'
-alt-3 = 'workspace 📝'
-# alt-4 = 'workspace 📥'
-# alt-5 = 'workspace 🎧'
+    # group 1 - home, messaging, musc
+    alt-1 = 'workspace 🏠' #slack/browser/zoom
+    alt-2 = 'workspace 📹' #mail
+    alt-3 = 'workspace 🎧' #music
 
-# add --focus-follows-window to go to next space when window is moved.
-alt-shift-1 = 'move-node-to-workspace 🏠'
-alt-shift-2 = 'move-node-to-workspace 👾'
-alt-shift-3 = 'move-node-to-workspace 📝'
-# alt-shift-4 = 'move-node-to-workspace 📥'
-# alt-shift-5 = 'move-node-to-workspace 🎧'
+    # group 2 - main-work, browser
+    alt-4 = 'workspace 👾' #work
+    alt-5 = 'workspace 🌎' #browser
+    alt-6 = 'workspace 🛠' #misc
 
-alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
-alt-shift-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
+    # group 3 - secondary, docs, browser
+    alt-7 = 'workspace 📚'  #docs/bruno
+    alt-8 = 'workspace 📟'  #terminal
+    alt-9 = 'workspace 🔎'  #misc/overflow
+    alt-0 = 'workspace E'   #Emacs
 
-alt-shift-semicolon = 'mode service'
+    # add --focus-follows-window to go to next space when window is moved.
+    alt-shift-1 = 'move-node-to-workspace 🏠'
+    alt-shift-2 = 'move-node-to-workspace 📹'
+    alt-shift-3 = 'move-node-to-workspace 🎧'
+    alt-shift-4 = 'move-node-to-workspace 👾'
+    alt-shift-5 = 'move-node-to-workspace 🌎'
+    alt-shift-6 = 'move-node-to-workspace 🛠'
+    alt-shift-7 = 'move-node-to-workspace 📚'
+    alt-shift-8 = 'move-node-to-workspace 📟'
+    alt-shift-9 = 'move-node-to-workspace 🔎'
+    alt-shift-0 = 'move-node-to-workspace E'
+
+    alt-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right'
+    # alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+    alt-shift-tab = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left'
+
+    alt-shift-semicolon = 'mode service'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
-backspace = ['close-all-windows-but-current', 'mode main']
+    esc = ['reload-config', 'mode main']
+    r = ['flatten-workspace-tree', 'mode main'] # reset layout
+    f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+    alt-shift-h = ['join-with left', 'mode main']
+    alt-shift-j = ['join-with down', 'mode main']
+    alt-shift-k = ['join-with up', 'mode main']
+    alt-shift-l = ['join-with right', 'mode main']
+    backspace = ['close-all-windows-but-current', 'mode main']
 
 
 # [workspace-to-monitor-force-assignment]
@@ -94,11 +118,16 @@ backspace = ['close-all-windows-but-current', 'mode main']
 #     6 = ['secondary', 'dell']        # You can specify multiple patterns. First matching pattern will be used
 
 [workspace-to-monitor-force-assignment]
-'🏠' = 1
-'👾' = [2, 1]
-'📝' = [3, 1]
-# '📥' = 1
-# '🎧' = 1
+    '🏠' = 1
+    '📹' = 1
+    '🎧' = 1
+    '👾' = [2, 1]
+    '🌎' = [2, 1]
+    '🛠' = [2, 1]
+    '📚' = [3, 1]
+    '📟' = [3, 1]
+    '🔎' = [3, 1]
+    'E'  = [3, 1]
 
 # [[on-window-detected]]
 #     if.app-id = 'com.apple.systempreferences'
@@ -109,14 +138,51 @@ backspace = ['close-all-windows-but-current', 'mode main']
 #     check-further-callbacks = true
 #     run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
 
+# Floating
 [[on-window-detected]]
-if.app-name-regex-substring = 'Activity Monitor'
-run = ['layout floating']
+    if.app-name-regex-substring = 'Activity Monitor'
+    run = ['layout floating']
+
+# LEFT MONITOR
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Slack'
+    run = ['move-node-to-workspace 🏠', 'layout v_accordion']
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'slack'
-run = ['move-node-to-workspace 🏠']
+    if.app-name-regex-substring = 'Microsoft Outlook'
+    run = ['move-node-to-workspace 🏠', 'layout v_accordion']
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'outlook'
-run = ['move-node-to-workspace 🏠']
+    if.app-name-regex-substring = 'Jira'
+    run = ['move-node-to-workspace 🏠', 'layout v_accordion']
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Zoom'
+    run = ['move-node-to-workspace 📹', 'layout v_accordion']
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Music'
+    run = ['move-node-to-workspace 🎧', 'layout v_accordion']
+    
+# MIDDLE MONITOR
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Code'
+    run = ['move-node-to-workspace 👾', 'layout v_accordion']
+
+# RIGHT MONITOR
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Docs'
+    run = ['move-node-to-workspace 🔎', 'layout v_accordion']
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'kitty'
+    run = ['move-node-to-workspace 📟', 'layout v_accordion']
+
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'DBeaver'
+    run = ['move-node-to-workspace 📚', 'layout v_accordion']
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Emacs'
+    run = ['move-node-to-workspace E']

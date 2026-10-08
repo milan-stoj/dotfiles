@@ -1,8 +1,16 @@
-require 'config.keymaps'
-require 'config.lazy'
-require 'config.options'
-require 'config.autocommands'
-require 'config.lsp'
-require 'config.theme'
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
--- vim: ts=2 sts=2 sw=2 et
+-- Enable autoread
+vim.o.autoread = true
+
+-- Reload file automatically when changed outside of Neovim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    command = "checktime"
+})
+require 'config.options'
+require 'config.autocmds'
+require 'config.pack'
+require 'plugins'
+require 'config.keymaps'
+require 'config.lsp'

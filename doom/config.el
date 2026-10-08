@@ -21,10 +21,11 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+;;(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
-      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font Propo" :size 13)
       )
 
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -55,9 +56,9 @@
                       :family "DejaVu Sans"
                       :weight 'bold
                       :height 1.8)
-  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 0.85)
-  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :height 1.0)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch) :height 1.0)
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch) :height 1.0)
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   (when (facep 'org-indent)
@@ -167,6 +168,31 @@
         )
   )
 
+(use-package! obsidian
+  :config
+  (global-obsidian-mode t)
+  (obsidian-backlinks-mode t)
+  (define-key obsidian-mode-map (kbd "C-c M-o") 'obsidian-hydra/body)
+  :custom
+  ;; location of obsidian vault
+  (obsidian-directory "~/Obsidian/pkm-vault")
+  ;; Default location for new notes from `obsidian-capture'
+  (obsidian-inbox-directory "100-inbox")
+  ;; Useful if you're going to be using wiki links
+  (markdown-enable-wiki-links t)
+
+  ;; These bindings are only suggestions; it's okay to use other bindings
+  :bind (:map obsidian-mode-map
+              ;; Create note
+              ("C-c C-n" . obsidian-capture)
+              ;; If you prefer you can use `obsidian-insert-wikilink'
+              ("C-c C-l" . obsidian-insert-link)
+              ;; Open file pointed to by link at point
+              ("C-c C-o" . obsidian-follow-link-at-point)
+              ;; Open a different note from vault
+              ("C-c C-p" . obsidian-jump)
+              ;; Follow a backlink for the current file
+              ("C-c C-b" . obsidian-backlink-jump)))
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
@@ -209,6 +235,35 @@
   (setq jira-api-version 2)
   (setq jira-debug t)
   )
+
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+;;; Configure jire.el for Evil mode keybindings
+(after! jira
+  (map! :map jira-issues-mode-map
+        :n "g?" 'jira-issues-actions-menu
+        :n "gl" 'jira-issues-menu
+        :n "gt" '(lambda () (interactive) (jira-issues--jump-to-tempo))
+        :n "gf" '(lambda () (interactive) (jira-detail-find-issue-by-key))
+        :n "gc" '(lambda () (interactive) (jira-actions-copy-issues-id-to-clipboard (jira-utils-marked-item)))
+        :n "gC" 'jira-actions-change-issue-menu
+        :n "gi" '(lambda () (interactive) (jira-detail-show-issue (jira-utils-marked-item)))
+        :n "go" '(lambda () (interactive) (jira-actions-open-issue (jira-utils-marked-item)))
+        :n "gw" 'jira-actions-add-worklog-menu)
+
+  (map! :map jira-detail-mode-map
+        :n "?" 'jira-detail--actions-menu
+        :n "+" '(lambda () (interactive ) (jira-detail--add-comment jira-detail--current-key))
+        :n "-" '(lambda () "Remove comment at point" (interactive) (jira-detail--remove-comment-at-point))
+        :n "C" '(lambda () "Change issue status" (interactive) (jira-detail--change-issue-status))
+        :n "O" '(lambda () "Open issue in browser" (interactive)  (jira-actions-open-issue jira-detail--current-key))
+        :n "U" '(lambda () "Update issue field" (interactive) (jira-detail--update-field))
+        :n "w" 'jira-detail--watchers-menu
+        :n "f" '(lambda () "Find issue by key" (interactive) (jira-detail-find-issue-by-key))
+        :n "c" '(lambda () "Copy selected issue id to clipboard" (interactive) (jira-actions-copy-issues-id-to-clipboard jira-detail--current-key))
+        :n "g" '(lambda () "Refresh issue detail" (interactive) (jira-detail-show-issue jira-detail--current-key))
+        :n "P" '(lambda () "Show parent issue" (interactive) (jira-detail--show-parent-issue))
+        :n "S" '(lambda () "Add subtask" (interactive) (jira-detail--create-subtask))))
 
 (setq elfeed-feeds
       '("https://planet.emacslife.com/atom.xml"

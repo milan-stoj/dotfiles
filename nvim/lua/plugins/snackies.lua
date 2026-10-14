@@ -3,12 +3,11 @@ Snacks.setup {
   bigfile = { enabled = true },
   dashboard = {
     enabled = true,
-
     sections = {
       {
         section = 'terminal',
         cmd = [[curl -fsS --max-time 5 'https://wttr.in/Milwaukee?1FQ' 2>/dev/null || printf 'Weather unavailable\n']],
-        align = "center",
+        align = 'center',
         height = 15,
         width = 130,
         indent = -32,
@@ -21,15 +20,13 @@ Snacks.setup {
             os.date '%A, %B %d, %Y',
             os.date '%I:%M %p',
           }, '\n'),
-          align = "center",
+          align = 'center',
           padding = 1,
         }
       end,
-
-
       { section = 'keys', padding = 1 },
-      { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
-      { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+      { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 2 },
+      { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
     },
   },
   explorer = { enabled = true, replace_netrw = true },
@@ -40,6 +37,13 @@ Snacks.setup {
   picker = { enabled = true, ui_select = true },
   statuscolumn = { enabled = true },
   scroll = { enabled = true },
+  zen = {
+    win = {
+      backdrop = {
+        transparent = false,
+      }
+    }
+  },
   quickfile = { enabled = true },
   lazygit = {
     configure = true,

@@ -78,23 +78,9 @@ vim.keymap.set('n', '<leader><TAB>5', '5gt', { desc = 'Tab 5' })
 
 --
 
-local function open_project_tab()
-  local dir = vim.fn.input('Project directory: ', vim.fn.expand '~/', 'dir')
-  if dir == '' then
-    return
-  end
-
-  dir = vim.fs.normalize(vim.fn.expand(dir))
-  vim.cmd.tabnew()
-  vim.cmd.tcd(vim.fn.fnameescape(dir))
-
-  vim.api.nvim_tabpage_set_var(0, 'project_root', dir)
-  Snacks.picker.files {
-    cwd = dir,
-  }
-end
-
-vim.keymap.set('n', '<leader><TAB>p', open_project_tab, { desc = 'Open a project in new tab' })
+vim.keymap.set('n', '<leader><TAB>p', function()
+  Snacks.picker.projects()
+end, { desc = 'Open a project in new tab' })
 
 -- ============================================================================
 -- Neotest
